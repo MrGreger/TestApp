@@ -18,22 +18,22 @@ using TestApp.ViewModels;
 namespace TestApp.Views
 {
     /// <summary>
-    /// Interaction logic for UserCreate.xaml
+    /// Interaction logic for Users.xaml
     /// </summary>
-    public partial class UserCreate : ReactiveUserControl<UserCreateViewModel>
+    public partial class UsersView : ReactiveUserControl<UsersListViewModel>
     {
-        public UserCreate()
+        public UsersView()
         {
             InitializeComponent();
+
+            var a = ViewModel;
 
             this.WhenActivated(disposables =>
             {
                 this.BindCommand(ViewModel, x => x.CreateUserCommand, x => x.CreateUserButton).DisposeWith(disposables);
-                this.Bind(ViewModel, x => x.Username, x => x.UsernameText.Text).DisposeWith(disposables);
-                this.Bind(ViewModel, x => x.Email, x => x.EmailText.Text).DisposeWith(disposables);
-                this.Bind(ViewModel, x => x.Phone, x => x.PhoneText.Text).DisposeWith(disposables);
-                this.Bind(ViewModel, x => x.Password, x => x.PasswordText.Text).DisposeWith(disposables);
-                this.OneWayBind(ViewModel, x => x.ErrorMessage, x => x.ErrorLabel.Text).DisposeWith(disposables);
+                this.BindCommand(ViewModel, x => x.GetUsersCommand, x => x.RefreshButton).DisposeWith(disposables);
+                this.OneWayBind(ViewModel, x => x.Users, x => x.UsersList.ItemsSource).DisposeWith(disposables);
+                ViewModel.GetUsersCommand.Execute();
             });
         }
     }

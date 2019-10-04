@@ -2,6 +2,7 @@
 using FirebaseAdmin.Auth;
 using Google.Apis.Auth.OAuth2;
 using ReactiveUI;
+using Splat;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,19 +41,12 @@ namespace TestApp.Views
 
             this.WhenActivated(disposables =>
             {
-                this.Bind(ViewModel, x => x.NavigantionPanelVisible, x => x.NavigationPanel.Visibility, BoolToVisibilityConverter, VisibilityToBoolConverter).DisposeWith(disposables);
+                this.OneWayBind(ViewModel, x => x.NavigantionPanelVisible, x => x.NavigationPanel.Visibility, x => x ? Visibility.Visible : Visibility.Collapsed).DisposeWith(disposables);
                 this.OneWayBind(ViewModel, x => x.Router, x => x.RoutedViewHost.Router).DisposeWith(disposables);
+                this.BindCommand(ViewModel, x => x.PopStack, x => x.BackButton).DisposeWith(disposables);
             });
-        }
 
-        private Visibility BoolToVisibilityConverter(bool isVisible)
-        {
-            return isVisible ? Visibility.Visible : Visibility.Collapsed;
-        }
 
-        private bool VisibilityToBoolConverter(Visibility visibility)
-        {
-            return visibility == Visibility.Visible;
         }
     }
 }
