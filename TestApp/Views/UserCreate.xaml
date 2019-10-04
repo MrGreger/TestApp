@@ -25,6 +25,16 @@
             <Label>Email</Label>
             <TextBox />
         </StackPanel>
+        <StackPanel>
+            <StackPanel>
+                <Label>Password</Label>
+                <TextBox />
+            </StackPanel>
+            <StackPanel>
+                <Label>Confirmpassword</Label>
+                <TextBox />
+            </StackPanel>
+        </StackPanel>
         <Button Margin="0,10,0, 0">Create</Button>
     </StackPanel>
 </Window>
